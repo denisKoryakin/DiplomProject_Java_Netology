@@ -6,6 +6,8 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -33,14 +34,14 @@ import ru.koryakin.diplomproject.service.JpaUserDetailsService;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-    private final RsaKeyProperties rsaKeyProperties;
+    @Autowired
+    private JpaUserDetailsService jpaUserDetailsService;
 
-    private final JpaUserDetailsService jpaUserDetailsService;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    public SecurityConfig(RsaKeyProperties rsaKeyProperties, JpaUserDetailsService jpaUserDetailsService) {
-        this.rsaKeyProperties = rsaKeyProperties;
-        this.jpaUserDetailsService = jpaUserDetailsService;
-    }
+    @Autowired
+    private RsaKeyProperties rsaKeyProperties;
 
     @Bean
     public AuthenticationManager authenticationManager(JpaUserDetailsService userDetailsService) {
@@ -50,15 +51,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    static PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /**
-         * /newUser - доступен всем, необходим для регистрации пользователя и наделения его ролью для дальнейшей работы
-         * */
+        /** /newUser - доступен всем, необходим для регистрации пользователя и наделения его ролью для дальнейшей работы */
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
@@ -68,12 +67,12 @@ public class SecurityConfig {
                 .userDetailsService(jpaUserDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .bearerTokenResolver(new BearerTokenResolverImpl()))
                 .exceptionHandling((ex) -> ex
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
-//                .headers(headers -> headers.frameOptions().sameOrigin())
-//                .logout((logout) -> logout.permitAll());
                 .build();
     }
 
@@ -93,5 +92,4 @@ public class SecurityConfig {
         JWKSource<SecurityContext> jwkKeys = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwkKeys);
     }
-
 }

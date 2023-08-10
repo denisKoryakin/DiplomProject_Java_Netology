@@ -1,13 +1,11 @@
 package ru.koryakin.diplomproject.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,11 +14,25 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private long userid;
+
+    @Column(nullable = false, unique = true)
     private String userName;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String roles;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<File> userFiles;
+
+    public List<File> getUserFiles() {
+        return userFiles;
+    }
 
     public User(String userName, String password, String roles) {
         this.userName = userName;
