@@ -28,6 +28,8 @@ public interface FileRepository extends CrudRepository<FileStorage, Long> {
 
     Optional<FileStorage> findByFileName(String filename);
 
+    boolean existsByFileName(String filename);
+
     default boolean uploadFile(String filename, MultipartFile file, Principal principal) {
         File dir = new File("C://CloudDir/" + principal.getName());
         File file1 = new File(dir + "/" + filename);
@@ -40,13 +42,29 @@ public interface FileRepository extends CrudRepository<FileStorage, Long> {
         }
     }
 
-    default boolean deleteFile(FileStorage fileToDelete, Principal principal) {
-        Path path = Paths.get("C://CloudDir/" + principal.getName() + fileToDelete.getFileName());
+    default boolean deleteFile(FileStorage fileToDelete, String username) {
+        Path path = Paths.get("C://CloudDir/" + username + "/" + fileToDelete.getFileName());
         try {
             Files.delete(path);
             return true;
         } catch (IOException ex) {
             return false;
         }
+    }
+
+    default byte[] getFileByFilename(String filename, String username) {
+        Path path = Paths.get("C://CloudDir/" + username + "/" + filename);
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException ex) {
+            throw new FileError("Не удалось загрузить файл");
+        }
+    }
+
+    default boolean renameFile(String filename, String newFilename, String username) {
+        File file1 = new File("C://CloudDir/" + username + "/" + filename);
+        File file2 = new File("C://CloudDir/" + username + "/" + newFilename);
+        file1.renameTo(file2);
+        return file2.exists();
     }
 }

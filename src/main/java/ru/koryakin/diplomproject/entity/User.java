@@ -28,7 +28,7 @@ public class User {
     private String roles;
 
     //    добавление в List файла приводит к сохранению файла в свою таблицу из-за cascade = CascadeType.ALL
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private List<FileStorage> userFileStorages;
 
     public List<FileStorage> getUserFileStorage() {
