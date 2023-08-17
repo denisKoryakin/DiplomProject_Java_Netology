@@ -27,11 +27,11 @@ public class User {
     @Column(nullable = false)
     private String roles;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<File> userFiles;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<FileStorage> userFileStorages;
 
-    public List<File> getUserFiles() {
-        return userFiles;
+    public List<FileStorage> getUserFileStorages() {
+        return userFileStorages;
     }
 
     public User(String userName, String password, String roles) {

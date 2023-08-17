@@ -7,9 +7,9 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,9 +38,6 @@ public class SecurityConfig {
     private JpaUserDetailsService jpaUserDetailsService;
 
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
     private RsaKeyProperties rsaKeyProperties;
 
     @Bean
@@ -61,6 +58,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/newUser", "/login", "/logout").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -69,10 +67,11 @@ public class SecurityConfig {
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .bearerTokenResolver(new BearerTokenResolverImpl()))
-                .exceptionHandling((ex) -> ex
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
+// TODO: 14.08.2023 под вопросом возможно нужны свои ошибки о неавторизованном пользователе
+//                .exceptionHandling((ex) -> ex
+//                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+//                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+//                )
                 .build();
     }
 

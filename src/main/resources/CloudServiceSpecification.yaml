@@ -62,7 +62,7 @@ paths:
           in: query
           schema:
             type: string
-          description: File name to upload
+          description: FileStorage name to upload
       requestBody:
         content:
           multipart/form-data:
@@ -95,7 +95,7 @@ paths:
           in: query
           schema:
             type: string
-          description: File name to delete
+          description: FileStorage name to delete
           required: true
       responses:
         '200':
@@ -130,7 +130,7 @@ paths:
           in: query
           schema:
             type: string
-          description: File name to download
+          description: FileStorage name to download
       responses:
         '200':
           description: Success deleted
@@ -168,7 +168,7 @@ paths:
           in: query
           schema:
             type: string
-          description: File name to upload
+          description: FileStorage name to upload
       requestBody:
         description: LoginRequest and password hash
         required: true
@@ -224,11 +224,11 @@ paths:
                 properties:
                   filename:
                     type: string
-                    description: File name
+                    description: FileStorage name
                     required: true
                   size:
                     type: integer
-                    description: File size in bytes
+                    description: FileStorage size in bytes
                     required: true
         '400':
           description: Error input data

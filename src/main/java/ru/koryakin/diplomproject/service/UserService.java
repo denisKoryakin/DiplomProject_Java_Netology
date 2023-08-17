@@ -10,6 +10,8 @@ import ru.koryakin.diplomproject.repository.UserRepository;
 
 import java.rmi.ServerException;
 
+/** Класс для регистрации нового пользователя */
+
 @Service
 public class UserService {
 
