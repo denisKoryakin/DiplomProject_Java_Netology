@@ -27,10 +27,11 @@ public class User {
     @Column(nullable = false)
     private String roles;
 
+    //    добавление в List файла приводит к сохранению файла в свою таблицу из-за cascade = CascadeType.ALL
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private List<FileStorage> userFileStorages;
 
-    public List<FileStorage> getUserFileStorages() {
+    public List<FileStorage> getUserFileStorage() {
         return userFileStorages;
     }
 

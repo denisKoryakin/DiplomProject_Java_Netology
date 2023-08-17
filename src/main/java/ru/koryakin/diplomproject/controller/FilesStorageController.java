@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.koryakin.diplomproject.controller.model.request.EditRequest;
 import ru.koryakin.diplomproject.exception.BadCredentials;
 import ru.koryakin.diplomproject.service.FilesStorageService;
 
@@ -28,25 +29,22 @@ public class FilesStorageController {
 
     @RolesAllowed({"ADMIN", "USER"})
     @PostMapping("/file")
-    public List<?>uploadFile(@RequestParam("filename") String filename, MultipartFile file, Principal principal) {
-        return service.uploadFile(filename,file, principal);
-//        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<?> uploadFile(@RequestParam("filename") String filename, MultipartFile file, Principal principal) {
+        return service.uploadFile(filename, file, principal);
     }
 
-//    @RolesAllowed({"ADMIN", "USER"})
-//    @DeleteMapping("/file")
-//    public ResponseEntity<?>deleteFile(@RequestParam("filename") String filename){
-//        service.deleteFile(filename);
-//        return ResponseEntity.ok(HttpStatus.OK);
-//    }
-//
-//    @RolesAllowed({"ADMIN", "USER"})
-//    @PutMapping("/file")
-//    public ResponseEntity<?> editFilename(EditRequest editRequest){
-//        boolean b = service.editFileName(editRequest.getFilename(),editRequest.getNewFilename());
-//        return ResponseEntity.ok(HttpStatus.OK);
-//    }
-//
+    @RolesAllowed({"ADMIN", "USER"})
+    @DeleteMapping("/file")
+    public ResponseEntity<?>deleteFile(@RequestParam("filename") String filename, Principal principal){
+        return service.deleteFile(filename, principal);
+    }
+
+    @RolesAllowed({"ADMIN", "USER"})
+    @PutMapping("/file")
+    public ResponseEntity<?> editFilename(@RequestParam("filename") String filename, EditRequest editRequest, Principal principal){
+        return service.editFileName(filename,editRequest.newFilename(), principal);
+    }
+
 //    @RolesAllowed({"ADMIN", "USER"})
 //    @GetMapping("/file")
 //    @ResponseBody
