@@ -11,7 +11,7 @@ import ru.koryakin.diplomproject.controller.model.request.EditRequest;
 import ru.koryakin.diplomproject.exception.BadCredentials;
 import ru.koryakin.diplomproject.service.FilesStorageService;
 
-import javax.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 

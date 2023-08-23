@@ -25,8 +25,7 @@ import java.util.Optional;
 public interface FileRepository extends CrudRepository<FileStorage, Long> {
 
     List <FileStorage> findAllBy();
-
-    Optional<FileStorage> findByFileName(String filename);
+     Optional<FileStorage> findByFileName(String filename);
 
     boolean existsByFileName(String filename);
 

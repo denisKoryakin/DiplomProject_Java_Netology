@@ -18,6 +18,7 @@ import ru.koryakin.diplomproject.repository.UserRepository;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class FilesStorageService {
                         .collect(Collectors.toList());
             } else {
                 return fileRepository.findAllBy().stream()
-                        .filter(fileStorage -> fileStorage.getUser().getUserName().equals(principal.getName()))
+                        .filter(fileStorage -> Objects.equals(principal.getName(), fileStorage.getUser().getUserName()))
                         .limit(limitInt)
                         .map(fileStorage -> new FileResponse(fileStorage.getFileName(), fileStorage.getSize()))
                         .collect(Collectors.toList());
