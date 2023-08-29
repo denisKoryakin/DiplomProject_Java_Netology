@@ -1,12 +1,16 @@
 package ru.koryakin.diplomproject.repository;
 
+import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.containers.PostgreSQLContainer;
 import ru.koryakin.diplomproject.entity.FileStorage;
 import ru.koryakin.diplomproject.entity.User;
 
@@ -14,8 +18,12 @@ import java.util.List;
 import java.util.Optional;
 
 @ActiveProfiles("test")
+@RunWith(SpringRunner.class)
 @SpringBootTest
 class FileAndUserRepositoryIntegrationTest {
+
+    @ClassRule
+    public static PostgreSQLContainer postgreSQLContainer = BaeldungPostgresqlContainer.getInstance();
 
     @Autowired
     FileRepository fileRepository;
@@ -25,6 +33,7 @@ class FileAndUserRepositoryIntegrationTest {
 
     @BeforeEach
     private void insertData() {
+        postgreSQLContainer.start();
         User testUser = new User();
         testUser.setUserName("testUser");
         testUser.setPassword("password");
