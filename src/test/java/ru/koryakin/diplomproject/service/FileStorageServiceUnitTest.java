@@ -114,7 +114,7 @@ public class FileStorageServiceUnitTest {
         Mockito.when(multipartFile.getSize()).thenReturn(15L);
         Mockito.when(userRepository.save(testUser)).thenReturn(testUser);
         Mockito.when(fileRepository.existsByFileName(Mockito.eq("filenameTest"))).thenReturn(true);
-        Mockito.when(fileRepository.uploadFile("filenameTest", multipartFile, principal)).thenReturn(true);
+        Mockito.when(fileRepository.uploadFile("filenameTest", multipartFile, principal.getName())).thenReturn(true);
         //act
         filesStorageService.uploadFile("filenameTest", multipartFile, principal);
         //assert

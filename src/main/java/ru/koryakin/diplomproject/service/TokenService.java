@@ -17,6 +17,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
+/** Класс для создания и валидирования токенов */
+
 @Service
 public class TokenService {
 

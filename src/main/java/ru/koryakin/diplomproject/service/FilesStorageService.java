@@ -61,7 +61,7 @@ public class FilesStorageService {
             user.getUserFileStorage().add(new FileStorage(filename, file.getSize(), user));
             userRepository.save(user);
             if (fileRepository.existsByFileName(filename)) {
-                fileRepository.uploadFile(filename, file, principal);
+                fileRepository.uploadFile(filename, file, principal.getName());
                 return ResponseEntity.ok(HttpStatus.OK);
             } else {
                 throw new FileError("Не удалось загрузить файл");

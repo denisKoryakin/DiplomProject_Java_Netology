@@ -1,17 +1,14 @@
 package ru.koryakin.diplomproject.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.koryakin.diplomproject.controller.model.request.EditRequest;
-import ru.koryakin.diplomproject.exception.BadCredentials;
 import ru.koryakin.diplomproject.service.FilesStorageService;
 
-import jakarta.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 

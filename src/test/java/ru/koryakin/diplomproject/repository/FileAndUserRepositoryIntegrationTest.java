@@ -1,5 +1,6 @@
 package ru.koryakin.diplomproject.repository;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class FileAndUserRepositoryTest {
+class FileAndUserRepositoryIntegrationTest {
 
     @Autowired
     FileRepository fileRepository;

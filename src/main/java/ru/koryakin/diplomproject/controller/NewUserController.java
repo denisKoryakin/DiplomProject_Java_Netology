@@ -9,15 +9,14 @@ import ru.koryakin.diplomproject.service.UserService;
 
 import java.rmi.ServerException;
 
+/** класс регистрации нового пользователя */
+
 @RestController
 public class NewUserController {
 
     @Autowired
     UserService userService;
 
-    /**
-     * Регистрация нового пользователя
-     */
     @PostMapping(path = "/newUser",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -67,11 +67,10 @@ public class SecurityConfig {
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .bearerTokenResolver(new BearerTokenResolverImpl()))
-// TODO: 14.08.2023 под вопросом возможно нужны свои ошибки о неавторизованном пользователе
-//                .exceptionHandling((ex) -> ex
-//                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-//                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-//                )
+                .exceptionHandling((ex) -> ex
+                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                )
                 .build();
     }
 

@@ -10,9 +10,8 @@ import ru.koryakin.diplomproject.exception.FileError;
 import ru.koryakin.diplomproject.exception.ServerError;
 import ru.koryakin.diplomproject.exception.Unauthorized;
 
-/**
- * Класс обработчик исключений
- */
+/** Класс обработчик исключений */
+
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
