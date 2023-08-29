@@ -25,24 +25,6 @@ public class NewUserControllerUnitTest {
     @MockBean
     UserService userService;
 
-//    @Test
-//    void contextLoads() throws Exception {
-//        Assertions.assertNotNull(controller);
-//    }
-//
-//    @Test
-//    void getAllFilesTestUnauthenticated() {
-//        Assertions.assertThrows(AuthenticationCredentialsNotFoundException.class,
-//                () -> controller.getAllFiles("3", null)
-//                );
-//    }
-//
-//    @Test
-//    @WithMockUser(username = "Frodo", password = "Baggins", roles = "ADMIN")
-//    void getAllFilesTest() {
-//        controller.getAllFiles("3", (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//    }
-
     @Test
     public void newUserTest() throws Exception {
         //arrange

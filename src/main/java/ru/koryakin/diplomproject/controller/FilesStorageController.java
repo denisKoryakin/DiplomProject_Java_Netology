@@ -1,6 +1,6 @@
 package ru.koryakin.diplomproject.controller;
 
-import jakarta.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.koryakin.diplomproject.controller.model.request.EditRequest;
 import ru.koryakin.diplomproject.service.FilesStorageService;
 
+import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 

@@ -13,7 +13,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(initializers = {ProlongationTestBase.Initializer.class})
-public class ProlongationTestBase {
+public class ProlongationTestBase extends FileAndUserRepositoryIntegrationTest {
 
     @ClassRule
     public static final PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:11.1")

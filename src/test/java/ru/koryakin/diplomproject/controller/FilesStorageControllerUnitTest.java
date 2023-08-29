@@ -15,20 +15,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import ru.koryakin.diplomproject.controller.model.request.EditRequest;
 import ru.koryakin.diplomproject.controller.model.response.FileResponse;
-import ru.koryakin.diplomproject.entity.FileStorage;
-import ru.koryakin.diplomproject.entity.User;
-import ru.koryakin.diplomproject.repository.FileRepository;
 import ru.koryakin.diplomproject.service.FilesStorageService;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringJUnitConfig({
         FilesStorageController.class
