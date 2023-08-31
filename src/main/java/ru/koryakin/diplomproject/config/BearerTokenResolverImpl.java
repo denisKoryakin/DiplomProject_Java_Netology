@@ -10,7 +10,9 @@ import org.springframework.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Класс для мапинга токена из кастомного header'а */
+/**
+ * Класс для мапинга токена из кастомного header'а
+ */
 
 public class BearerTokenResolverImpl implements BearerTokenResolver {
 

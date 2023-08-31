@@ -12,8 +12,6 @@ import ru.koryakin.diplomproject.repository.UserRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringJUnitConfig({
         JpaUserDetailsService.class
 })

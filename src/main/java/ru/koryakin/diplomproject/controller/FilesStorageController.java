@@ -33,20 +33,20 @@ public class FilesStorageController {
 
     @RolesAllowed({"ADMIN", "USER"})
     @DeleteMapping("/file")
-    public ResponseEntity<?>deleteFile(@RequestParam("filename") String filename, Principal principal){
+    public ResponseEntity<?> deleteFile(@RequestParam("filename") String filename, Principal principal) {
         return service.deleteFile(filename, principal);
     }
 
     @RolesAllowed({"ADMIN", "USER"})
     @PutMapping("/file")
-    public ResponseEntity<?> editFilename(@RequestParam("filename") String filename, @RequestBody EditRequest editRequest, Principal principal){
-        return service.editFileName(filename,editRequest.filename(), principal);
+    public ResponseEntity<?> editFilename(@RequestParam("filename") String filename, @RequestBody EditRequest editRequest, Principal principal) {
+        return service.editFileName(filename, editRequest.filename(), principal);
     }
 
     @RolesAllowed({"ADMIN", "USER"})
     @GetMapping("/file")
     @ResponseBody
-    public ByteArrayResource getFileByFilename(String filename, Principal principal){
+    public ByteArrayResource getFileByFilename(String filename, Principal principal) {
         return service.getFileByFilename(filename, principal);
     }
 }

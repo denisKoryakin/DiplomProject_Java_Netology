@@ -3,13 +3,17 @@ package ru.koryakin.diplomproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import ru.koryakin.diplomproject.entity.User;
 import ru.koryakin.diplomproject.service.UserService;
 
 import java.rmi.ServerException;
 
-/** класс регистрации нового пользователя */
+/**
+ * класс регистрации нового пользователя
+ */
 
 @RestController
 public class NewUserController {
