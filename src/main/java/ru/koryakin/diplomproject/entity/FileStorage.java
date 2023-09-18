@@ -23,14 +23,18 @@ public class FileStorage {
 
     private double size;
 
+    @Transient
+    byte[] bytes;
+
     //    сторона - владелец
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_userid", nullable = false)
     private User user;
 
-    public FileStorage(String fileName, double size, User user) {
+    public FileStorage(String fileName, double size, User user, byte[] bytes) {
         this.fileName = fileName;
         this.size = size;
         this.user = user;
+        this.bytes = bytes;
     }
 }

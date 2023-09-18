@@ -1,4 +1,4 @@
-package ru.koryakin.diplomproject.controller.model.response;
+package ru.koryakin.diplomproject.controller.DTO.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

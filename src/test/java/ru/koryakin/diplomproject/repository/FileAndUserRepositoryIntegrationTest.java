@@ -61,10 +61,10 @@ class FileAndUserRepositoryIntegrationTest {
         testUser.setPassword("password");
         testUser.setRoles("USER");
         testUser.setUserFileStorages(List.of(
-                new FileStorage("file1", 25, testUser),
-                new FileStorage("file2", 20, testUser),
-                new FileStorage("file3", 400, testUser),
-                new FileStorage("file4", 1, testUser)
+                new FileStorage("file1", 25, testUser, new byte[25]),
+                new FileStorage("file2", 20, testUser, new byte[20]),
+                new FileStorage("file3", 400, testUser, new byte[400]),
+                new FileStorage("file4", 1, testUser, new byte[1])
         ));
         userRepository.save(testUser);
     }

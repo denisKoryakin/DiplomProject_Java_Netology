@@ -4,6 +4,7 @@ package ru.koryakin.diplomproject.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 /** Класс для создания и валидирования токенов */
 
+@Slf4j
 @Service
 public class TokenService {
 
@@ -60,7 +62,7 @@ public class TokenService {
             verifier.verify(token);
             return true;
         } catch (Exception e){
-            System.out.println("Exception in verifying "+e.toString());
+            log.warn("Exception in verifying "+e.getMessage());
             return false;
         }
     }

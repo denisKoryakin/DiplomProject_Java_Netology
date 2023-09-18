@@ -1,5 +1,6 @@
 package ru.koryakin.diplomproject.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,11 @@ import ru.koryakin.diplomproject.repository.UserRepository;
 
 import java.rmi.ServerException;
 
-/** Класс для регистрации нового пользователя */
+/**
+ * Класс для регистрации нового пользователя
+ */
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -21,10 +25,11 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<User> saveNewUser(User newUser) throws ServerException {
+    public User saveNewUser(User newUser) {
         String newPassword = passwordEncoder.encode(newUser.getPassword());
         User toSave = new User(newUser.getUserName(), newPassword, newUser.getRoles());
         userRepository.save(toSave);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        log.info("Зарегистрирован новый пользователь: {}, роль: {}", toSave.getUserName(), toSave.getRoles());
+        return newUser;
     }
 }

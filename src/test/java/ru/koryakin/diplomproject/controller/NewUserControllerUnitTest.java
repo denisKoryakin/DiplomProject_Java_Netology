@@ -34,7 +34,7 @@ public class NewUserControllerUnitTest {
         testUser.setRoles("USER");
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        Mockito.when(userService.saveNewUser(testUser)).thenReturn(new ResponseEntity<User>(testUser, HttpStatus.CREATED));
+        Mockito.when(userService.saveNewUser(testUser)).thenReturn(testUser);
 
         //act
         ResponseEntity<User> responseEntity = newUserController.create(testUser);

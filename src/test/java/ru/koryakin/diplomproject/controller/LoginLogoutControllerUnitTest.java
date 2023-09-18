@@ -16,8 +16,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import ru.koryakin.diplomproject.controller.model.Token;
-import ru.koryakin.diplomproject.controller.model.request.LoginRequest;
+import ru.koryakin.diplomproject.controller.DTO.Token;
+import ru.koryakin.diplomproject.controller.DTO.request.LoginRequest;
 import ru.koryakin.diplomproject.service.TokenService;
 
 import java.util.Collection;

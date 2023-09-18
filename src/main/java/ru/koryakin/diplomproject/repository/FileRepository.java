@@ -25,12 +25,12 @@ public interface FileRepository extends CrudRepository<FileStorage, Long> {
 
     boolean existsByFileName(String filename);
 
-    default boolean uploadFile(String filename, MultipartFile file, String username) {
+    default boolean uploadFile(FileStorage fileStorage, String username) {
         File dir = new File("C://CloudDir/" + username);
-        File file1 = new File(dir + "/" + filename);
+        File file1 = new File(dir + "/" + fileStorage.getFileName());
         dir.mkdirs();
         try (FileOutputStream fos = new FileOutputStream(file1, false)) {
-            fos.write(file.getBytes());
+            fos.write(fileStorage.getBytes());
             return Arrays.asList(dir.listFiles()).contains(file1);
         } catch (RuntimeException | IOException ex) {
             return false;

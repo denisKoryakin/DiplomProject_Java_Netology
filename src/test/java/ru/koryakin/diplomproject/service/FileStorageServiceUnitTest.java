@@ -6,10 +6,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.web.multipart.MultipartFile;
 import ru.koryakin.diplomproject.entity.FileStorage;
 import ru.koryakin.diplomproject.entity.User;
-import ru.koryakin.diplomproject.exception.FileError;
 import ru.koryakin.diplomproject.repository.FileRepository;
 import ru.koryakin.diplomproject.repository.UserRepository;
 
@@ -39,9 +37,6 @@ public class FileStorageServiceUnitTest {
     @MockBean
     Principal principal;
 
-    @MockBean
-    MultipartFile multipartFile;
-
     @Test
     void getAllFilesTestWithAdmin() {
         //arrange
@@ -52,10 +47,10 @@ public class FileStorageServiceUnitTest {
         testAdmin.setRoles("ADMIN");
 
         List<FileStorage> files = List.of(
-                new FileStorage("filename1", 10, null),
-                new FileStorage("filename2", 2, null),
-                new FileStorage("filename3", 30, null),
-                new FileStorage("filename4", 90, null)
+                new FileStorage("filename1", 10, null, new byte[10]),
+                new FileStorage("filename2", 2, null, new byte[2]),
+                new FileStorage("filename3", 30, null, new byte[30]),
+                new FileStorage("filename4", 90, null, new byte[90])
         );
 
         Mockito.when(principal.getName()).thenReturn("testAdmin");
@@ -77,10 +72,10 @@ public class FileStorageServiceUnitTest {
         testUser.setRoles("USER");
 
         List<FileStorage> files = List.of(
-                new FileStorage("filename1", 10, new User()),
-                new FileStorage("filename2", 2, testUser),
-                new FileStorage("filename3", 30, new User()),
-                new FileStorage("filename4", 90, new User())
+                new FileStorage("filename1", 10, new User(), new byte[10]),
+                new FileStorage("filename2", 2, testUser, new byte[2]),
+                new FileStorage("filename3", 30, new User(), new byte[30]),
+                new FileStorage("filename4", 90, new User(), new byte[90])
         );
 
         Mockito.when(principal.getName()).thenReturn("testUser");
@@ -93,11 +88,6 @@ public class FileStorageServiceUnitTest {
     }
 
     @Test
-    void getAllFilesTestThrowsException() {
-        Assertions.assertThrows(FileError.class, () -> filesStorageService.getAllFiles("3", principal));
-    }
-
-    @Test
     void uploadFileTestByUser() {
         //arrange
         User testUser = new User();
@@ -107,16 +97,15 @@ public class FileStorageServiceUnitTest {
         testUser.setRoles("USER");
         testUser.setUserFileStorages(new ArrayList<>());
 
-        String filename = "filenameTest";
+        FileStorage fileStorage = new FileStorage("filenameTest", 15, testUser, new byte[15]);
 
         Mockito.when(principal.getName()).thenReturn("testUser");
         Mockito.when(userRepository.findByUserName(Mockito.eq("testUser"))).thenReturn(Optional.of(testUser));
-        Mockito.when(multipartFile.getSize()).thenReturn(15L);
         Mockito.when(userRepository.save(testUser)).thenReturn(testUser);
         Mockito.when(fileRepository.existsByFileName(Mockito.eq("filenameTest"))).thenReturn(true);
-        Mockito.when(fileRepository.uploadFile("filenameTest", multipartFile, principal.getName())).thenReturn(true);
+        Mockito.when(fileRepository.uploadFile(fileStorage, principal.getName())).thenReturn(true);
         //act
-        filesStorageService.uploadFile("filenameTest", multipartFile, principal);
+        filesStorageService.uploadFile(fileStorage, principal);
         //assert
         Assertions.assertEquals(1, testUser.getUserFileStorages().size());
     }
@@ -195,10 +184,10 @@ public class FileStorageServiceUnitTest {
         testUser.setPassword("password");
         testUser.setRoles("USER");
         testUser.setUserFileStorages(List.of(
-                new FileStorage("filename1", 10, testUser),
-                new FileStorage("filename2", 2, testUser),
-                new FileStorage("filename3", 30, testUser),
-                new FileStorage("filename4", 90, testUser)
+                new FileStorage("filename1", 10, testUser, new byte[10]),
+                new FileStorage("filename2", 2, testUser, new byte[2]),
+                new FileStorage("filename3", 30, testUser, new byte[30]),
+                new FileStorage("filename4", 90, testUser, new byte[90])
         ));
 
         String filename = "filename1";

@@ -1,6 +1,7 @@
 package ru.koryakin.diplomproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class NewUserController {
     @PostMapping(path = "/newUser",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create(@RequestBody User newUser) throws ServerException {
-        return userService.saveNewUser(newUser);
+    public ResponseEntity<User> create(@RequestBody User newUser) {
+        return new ResponseEntity<>(userService.saveNewUser(newUser), HttpStatus.CREATED);
     }
 }

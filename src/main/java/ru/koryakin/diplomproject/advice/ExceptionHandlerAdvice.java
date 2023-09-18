@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.koryakin.diplomproject.controller.model.response.ExceptionResponse;
+import ru.koryakin.diplomproject.controller.DTO.response.ExceptionResponse;
 import ru.koryakin.diplomproject.exception.BadCredentials;
 import ru.koryakin.diplomproject.exception.FileError;
 import ru.koryakin.diplomproject.exception.ServerError;

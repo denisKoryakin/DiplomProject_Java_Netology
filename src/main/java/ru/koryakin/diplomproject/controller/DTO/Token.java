@@ -1,4 +1,4 @@
-package ru.koryakin.diplomproject.controller.model;
+package ru.koryakin.diplomproject.controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
